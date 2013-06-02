@@ -7,7 +7,7 @@ class Tag extends SupportModel {
 
     public static $rules = array(
         'name' => 'required|min:3|unique:tags,name',
-        'slug' => 'required|min:3|alpha_dash|unique:tags,slug'
+        'slug' => 'required_with:name|min:3|alpha_dash|unique:tags,slug'
     );
 
     protected $table = 'tags';

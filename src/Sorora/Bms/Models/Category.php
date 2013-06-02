@@ -7,7 +7,7 @@ class Category extends SupportModel {
 
     public static $rules = array(
         'name' => 'required|min:3|unique:categories,name',
-        'slug' => 'required|min:3|alpha_dash|unique:categories,slug'
+        'slug' => 'required_with:name|min:3|alpha_dash|unique:categories,slug'
     );
 
     protected $table = 'categories';
