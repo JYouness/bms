@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 
 use Sorora\Aurp\Models\Permission;
 
-class CreatBmsStructure extends Migration {
+class CreateBmsStructure extends Migration {
 
 	protected $prefix;
 
