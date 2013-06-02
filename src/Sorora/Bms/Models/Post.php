@@ -7,10 +7,10 @@ class Post extends SupportModel {
 
     public static $rules = array(
         'user_id' => 'required|exists:users,id',
-        'title' => 'required|min:3',
-        'slug' => 'required|min:3|alpha_dash|unique:posts,slug',
+        'title' => 'required|min:3|unique:posts,title',
+        'slug' => 'required_with:title|min:3|alpha_dash|unique:posts,slug',
         'content' => 'required|min:10',
-        'published' => 'required|in:0,1',
+        'published' => 'in:0,1',
     );
 
     protected $table = 'posts';
@@ -28,5 +28,78 @@ class Post extends SupportModel {
     public function series()
     {
         return $this->belongsTo('Sorora\Bms\Models\Series', 'series_id');
+    }
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = trim($value);
+    }
+
+    public function highestSeriesOrder($id, $post_id = null)
+    {
+        $post = Post::where('series_id', $id)->orderBy('series_order', 'desc')->first();
+
+        if($post_id)
+        {
+            $current_post = Post::find($post_id);
+            if($id == $post->series_id)
+            {
+                return $post->series_order;
+            }
+        }
+
+        return ($post) ? $post->series_order + 1 : 1;
+    }
+
+    public function saveRelations($model, $items = null)
+    {
+        $model = 'Sorora\Bms\Models\\'.$model;
+
+        $array = explode(',', ((is_array($items)) ? $items : \Input::get($items)));
+
+        $not_new_items = Post::findExistingItems($model, Post::slugItems($array));
+
+        $ids = array_merge(Post::currentIds($not_new_items), Post::saveNewItems($model, array_diff($array, $not_new_items)));
+
+        return (!empty($ids)) ? $ids : array();
+    }
+
+    protected function slugItems($array)
+    {
+        $return = array();
+        foreach($array AS $item)
+        {
+            $return[] = Post::slug($item);
+        }
+        return $return;
+    }
+
+    protected function findExistingItems($model, $array)
+    {
+        return $model::whereIn('slug', $array)->lists('name', 'id');
+    }
+
+    protected function currentIds($array)
+    {
+        $ids = array();
+        foreach($array AS $id => $value)
+        {
+            $ids[] = $id;
+        }
+        return $ids;
+    }
+    protected function saveNewItems($model, $items)
+    {
+        $ids = array();
+        foreach($items AS $item)
+        {
+            $item = trim($item);
+            $created = $model::create(array('name' => $item, 'slug' => Post::slug($item)));
+            if(is_null($created->errors))
+            {
+                $ids[] = $created->id; 
+            }
+        }
+        return $ids;
     }
 }
