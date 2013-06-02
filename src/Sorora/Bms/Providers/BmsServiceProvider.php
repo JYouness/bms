@@ -34,6 +34,24 @@ class BmsServiceProvider extends ServiceProvider {
 		$this->app['config']->package('sorora/bms', __DIR__.'/../../../config');
 		// Register package view location
    		$this->app['view']->addNamespace('bms', __DIR__.'/../../../views');
+
+   		// Bindings for Repositories
+		$this->app->bind(
+			'Sorora\Bms\Models\Repositories\Series\SeriesRepositoryInterface',
+			'Sorora\Bms\Models\Repositories\Series\EloquentSeriesRepository'
+		);
+		$this->app->bind(
+			'Sorora\Bms\Models\Repositories\Post\PostRepositoryInterface',
+			'Sorora\Bms\Models\Repositories\Post\EloquentPostRepository'
+		);
+		$this->app->bind(
+			'Sorora\Bms\Models\Repositories\Category\CategoryRepositoryInterface',
+			'Sorora\Bms\Models\Repositories\Category\EloquentCategoryRepository'
+		);
+		$this->app->bind(
+			'Sorora\Bms\Models\Repositories\Tag\TagRepositoryInterface',
+			'Sorora\Bms\Models\Repositories\Tag\EloquentTagRepository'
+		);
 	}
 
 	/**
