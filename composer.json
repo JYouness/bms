@@ -16,6 +16,9 @@
         "way/laravel-test-helpers": "dev-master"
     },
     "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
         "psr-0": {
             "Sorora\\Bms": "src/"
         }
