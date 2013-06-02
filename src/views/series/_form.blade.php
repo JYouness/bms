@@ -1,0 +1,1 @@
+<p>{{ Form::label('title') }}{{ Form::text('title') }}</p>
