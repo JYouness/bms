@@ -1,4 +1,4 @@
-<?php namespace Sorora\Aurp\Models\Repositories\Category;
+<?php namespace Sorora\Bms\Models\Repositories\Category;
 
 interface CategoryRepositoryInterface {
 

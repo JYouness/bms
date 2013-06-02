@@ -1,4 +1,4 @@
-<?php namespace Sorora\Aurp\Models\Repositories\Tag;
+<?php namespace Sorora\Bms\Models\Repositories\Tag;
 
 interface TagRepositoryInterface {
 

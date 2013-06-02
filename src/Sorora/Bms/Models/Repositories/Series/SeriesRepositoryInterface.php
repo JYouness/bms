@@ -1,4 +1,4 @@
-<?php namespace Sorora\Aurp\Models\Repositories\Series;
+<?php namespace Sorora\Bms\Models\Repositories\Series;
 
 interface SeriesRepositoryInterface {
 

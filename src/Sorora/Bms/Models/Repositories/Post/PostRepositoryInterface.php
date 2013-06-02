@@ -1,4 +1,4 @@
-<?php namespace Sorora\Aurp\Models\Repositories\Post;
+<?php namespace Sorora\Bms\Models\Repositories\Post;
 
 interface PostRepositoryInterface {
 
