@@ -8,6 +8,7 @@ use Sorora\Bms\Models\Repositories\Series\SeriesRepositoryInterface as Series;
 class PostsController extends EmpowerController {
 
     protected $post;
+    protected $series;
 
     public function __construct(Post $post, Series $series)
     {
