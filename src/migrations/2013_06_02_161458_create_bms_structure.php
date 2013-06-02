@@ -31,8 +31,9 @@ class CreateBmsStructure extends Migration {
 			$table->engine = 'InnoDB';
 
 			$table->increments('id');
-			$table->integer('series_id')->unsigned();
 			$table->integer('user_id')->unsigned();
+			$table->integer('series_id')->unsigned();
+			$table->smallInteger('series_order')->unsigned()->default(0);
 			$table->string('title')->length(250);
 			$table->string('slug')->length(250);
 			$table->text('content');
