@@ -27,14 +27,18 @@ class BlogController extends EmpowerController {
     }
 
     /**
-     * Display the specified resource.
+     * Display a post retrieved from the slug
      *
      * @param  string  $slug
      * @return Response
      */
     public function post($slug)
     {
-        $post = $this->post->getFromField('slug', $slug);
+        $post = $this->post->with(array('categories' => function ($query) {
+           $query->orderBy('name', 'asc'); 
+        }, 'tags' => function ($query) {
+           $query->orderBy('name', 'asc'); 
+        }))->where('slug', $slug)->firstOrFail();
 
         // Only allow the author to preview a blog post when not published
         if($post->published !== 1 and \Auth::user()->id !== $post->user_id)
@@ -42,7 +46,6 @@ class BlogController extends EmpowerController {
             return \App::abort(404, 'Page not found');
         }
 
-        $post->load('tags', 'categories');
         $this->data['post'] = $post;
 
         $series = $this->series->with(array('posts' => function($query) {
@@ -58,8 +61,45 @@ class BlogController extends EmpowerController {
             $this->data['updated_on'] = $post->getDateDiffForHumans('updated_at'); 
         }
 
-        $view = \View::make('bms::blog.post', $this->data);
-        return $view;
+        return \View::make($this->viewFromConfig('bms', 'blog', 'post'), $this->data);
+    }
+
+    /**
+     * Display a category listing posts from the slug.
+     *
+     * @param  string  $slug
+     * @return Response
+     */
+    public function category($slug)
+    {
+        $category = $this->category->with(array('posts' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }))->where('slug', $slug)->firstOrFail();
+
+        return $this->singleList($category, 'category');
+    }
+
+    /**
+     * Display a tag listing posts from the slug.
+     *
+     * @param  string  $slug
+     * @return Response
+     */
+    public function tag($slug)
+    {
+        $tag = $this->tag->with(array('posts' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }))->where('slug', $slug)->firstOrFail();
+
+        return $this->singleList($tag, 'tag');
+    }
+
+    protected function singleList($item, $item_name, $title = null)
+    {
+        $this->data['title'] = ($title) ?: $item->name;
+        $this->data['item'] = $item;
+        $this->data['item_name'] = $item_name;
+        return \View::make($this->viewFromConfig('bms', 'blog', 'list'), $this->data);
     }
 
 }

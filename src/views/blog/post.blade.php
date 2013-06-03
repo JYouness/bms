@@ -26,7 +26,7 @@
                 @foreach($series->posts AS $p)
                     <li>
                         @if($p->id == $post->id)
-                            <i>{{ $p->title }}</i>
+                            <i>{{{ $p->title }}}</i>
                         @else
                             {{ HTML::linkRoute('blog.post', $p->title, array($p->slug)) }}
                         @endif
@@ -36,13 +36,9 @@
         </div>
     @endif
 
-    <div>
+    <article>
         {{ $post->content }}
-    </div>
+    </article>
 
-    @if($post->tags->count())
-    <div>
-        <b>Tags</b>: {{ implode(', ', $post->tags->lists('name')) }}
-    </div>
-    @endif
+    @include('bms::blog._tags')
 @stop
