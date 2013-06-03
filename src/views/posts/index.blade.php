@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{ $post->id }}</td>
                     <td>{{ HTML::linkRoute($baseurl.'.show', $post->title, array($post->id)) }}</td>
-                    <td>{{ HTML::linkRoute('blog.show', 'View Blog Post', array($post->slug)) }}{{ HTML::linkRoute($baseurl.'.edit', 'Edit', array($post->id)) }}{{ Empower::buttonDestroy($baseurl.'', $post->id) }}</td>
+                    <td>{{ HTML::linkRoute('blog.post', 'View Blog Post', array($post->slug)) }}{{ HTML::linkRoute($baseurl.'.edit', 'Edit', array($post->id)) }}{{ Empower::buttonDestroy($baseurl.'', $post->id) }}</td>
                 </tr>
             @endforeach
         </table>
