@@ -7,7 +7,6 @@
     });
 
     Route::group(array('prefix' => Config::get('bms::prefix')), function () {
-        $prefix = Config::get('bms::prefix');
-        $prefix = ($prefix) ? Config::get('bms::prefix').'.' : null;
-        Route::get('{slug}', array('as' => $prefix.'blog.show', 'uses' => 'Sorora\\Bms\\Controllers\\BlogController@show'));
+        Route::get('{slug}', array('as' => 'blog.post', 'uses' => 'Sorora\\Bms\\Controllers\\BlogController@post'));
+        Route::get('category/{slug}', array('as' => 'blog.category', 'uses' => 'Sorora\\Bms\\Controllers\\BlogController@category'));
     });
