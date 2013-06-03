@@ -77,7 +77,7 @@ class Post extends SupportModel {
         $return = array();
         foreach($array AS $item)
         {
-            $return[] = Post::slug($item);
+            $return[] = \Str::slug($item);
         }
         return $return;
     }
@@ -102,7 +102,7 @@ class Post extends SupportModel {
         foreach($items AS $item)
         {
             $item = trim($item);
-            $created = $model::create(array('name' => $item, 'slug' => Post::slug($item)));
+            $created = $model::create(array('name' => $item, 'slug' => \Str::slug($item)));
             if(is_null($created->errors))
             {
                 $ids[] = $created->id; 
