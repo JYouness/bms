@@ -28,7 +28,7 @@ class SeriesController extends EmpowerController {
 
         $this->data['series'] = $this->series->all();
 
-        return \View::make('bms::series.index', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'series', 'index'), $this->data);
     }
 
     /**
@@ -40,7 +40,7 @@ class SeriesController extends EmpowerController {
     {
         $this->data['title'] = 'Create Series';
 
-        return \View::make('bms::series.create', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'series', 'create'), $this->data);
     }
 
     /**
@@ -71,7 +71,7 @@ class SeriesController extends EmpowerController {
 
         $this->data['title'] = 'Show Series: '.$this->data['series']->title;
 
-        return \View::make('bms::series.show', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'series', 'show'), $this->data);
     }
 
     /**
@@ -86,7 +86,7 @@ class SeriesController extends EmpowerController {
 
         $this->data['title'] = 'Edit Series: '.$this->data['series']->title;
 
-        return \View::make('bms::series.edit', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'series', 'edit'), $this->data);
     }
 
     /**

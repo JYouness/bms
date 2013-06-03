@@ -31,7 +31,7 @@ class PostsController extends EmpowerController {
 
         $this->data['posts'] = $this->post->orderBy('created_at', 'desc')->get();
 
-        return \View::make('bms::posts.index', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'posts', 'index'), $this->data);
     }
 
     /**
@@ -48,7 +48,7 @@ class PostsController extends EmpowerController {
         \View::share('current_tags', '');
         \View::share('current_categories', '');
 
-        return \View::make('bms::posts.create', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'posts', 'create'), $this->data);
     }
 
     /**
@@ -61,7 +61,7 @@ class PostsController extends EmpowerController {
         $this->post = $this->post->create(
             \Input::all() + 
             array(
-                'slug' => $this->post->slug(\Input::get('title')),
+                'slug' => \Str::slug(\Input::get('title')),
                 'user_id' => \Auth::user()->id,
                 'series_order' => $this->post->highestSeriesOrder(\Input::get('series_id'))
             )
@@ -97,7 +97,7 @@ class PostsController extends EmpowerController {
 
         $this->data['title'] = 'Show Post: '.$this->data['post']->title;
 
-        return \View::make('bms::posts.show', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'posts', 'show'), $this->data);
     }
 
     /**
@@ -119,7 +119,7 @@ class PostsController extends EmpowerController {
 
         $this->data['title'] = 'Edit Post: '.$this->data['post']->title;
 
-        return \View::make('bms::posts.edit', $this->data);
+        return \View::make($this->viewFromConfig('bms', 'posts', 'edit'), $this->data);
     }
 
     /**
@@ -136,7 +136,7 @@ class PostsController extends EmpowerController {
         $this->post->uniqueExcept('slug');
 
         $extra_fields = array(
-            'slug' => $this->post->slug(\Input::get('title')),
+            'slug' => \Str::slug(\Input::get('title')),
             'series_order' => $this->post->highestSeriesOrder(\Input::get('series_id'), $id)
         );
         if ($this->post->update(\Input::all() + $extra_fields))
