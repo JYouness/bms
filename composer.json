@@ -1,10 +1,15 @@
 {
     "name": "sorora/bms",
-    "description": "",
+    "description": "A Blog Management System for Laravel. Admin views provided, requires Sorora/Empower and Sorora/Aurp",
+    "keywords": ["laravel","sorora","bms","blog"],
+    "homepage": "http://github.com/sorora/bms",
+    "license": "MIT",
     "authors": [
         {
             "name": "David Bowen",
-            "email": "david@lifeofabowen.com"
+            "email": "david@lifeofabowen.com",
+            "homepage": "http://lifeofabowen.com",
+            "role": "Developer"
         }
     ],
     "require": {
