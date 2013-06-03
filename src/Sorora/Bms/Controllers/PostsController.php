@@ -29,7 +29,7 @@ class PostsController extends EmpowerController {
     {
         $this->data['title'] = 'Posts';
 
-        $this->data['posts'] = $this->post->all();
+        $this->data['posts'] = $this->post->orderBy('created_at', 'desc')->get();
 
         return \View::make('bms::posts.index', $this->data);
     }
