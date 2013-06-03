@@ -4,7 +4,11 @@
 
     <div>
         <small>
-            <i>Posted {{ $posted_on }}
+            <i>
+                @if(!empty($updated_on))
+                Last updated {{ $updated_on }}, originally
+                @endif
+                Posted {{ $posted_on }}
                 @if($post->categories->count())
                     in
                     @for($i = 0; $i < $post->categories->count(); $i++)
@@ -36,7 +40,9 @@
         {{ $post->content }}
     </div>
 
+    @if($post->tags->count())
     <div>
         <b>Tags</b>: {{ implode(', ', $post->tags->lists('name')) }}
     </div>
+    @endif
 @stop

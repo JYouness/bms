@@ -7,8 +7,6 @@ use Sorora\Bms\Models\Repositories\Series\SeriesRepositoryInterface as Series;
 use Sorora\Bms\Models\Repositories\Tag\TagRepositoryInterface as Tag;
 use Sorora\Bms\Models\Repositories\Category\CategoryRepositoryInterface as Category;
 
-use Carbon\Carbon;
-
 class BlogController extends EmpowerController {
 
     protected $post;
@@ -54,10 +52,14 @@ class BlogController extends EmpowerController {
         $this->data['series'] = $series;
 
         $this->data['title'] = $post->title;
-        $posted_on = new Carbon($post->created_at);
-        $this->data['posted_on'] = $posted_on->diffForHumans();
+        $this->data['posted_on'] = $post->getDateDiffForHumans('created_at');
+        if($post->updated_at > $post->created_at)
+        {
+            $this->data['updated_on'] = $post->getDateDiffForHumans('updated_at'); 
+        }
 
-        return \View::make('bms::blog.post', $this->data);
+        $view = \View::make('bms::blog.post', $this->data);
+        return $view;
     }
 
 }
