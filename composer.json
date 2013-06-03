@@ -16,7 +16,7 @@
         "php": ">=5.3.0",
         "illuminate/support": "4.0.x",
         "nesbot/Carbon": "*",
-        "sorora/aurp" : "1.*"
+        "sorora/aurp" : "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
