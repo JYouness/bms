@@ -36,4 +36,9 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
         return $this->model->saveRelations($model, $items);
     }
 
+    public function getDateDiffForHumans($field)
+    {
+        return $this->model->getDateDiffForHumans($field);
+    }
+
 }

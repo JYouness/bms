@@ -8,5 +8,6 @@ interface PostRepositoryInterface {
     public function setTitleAttribute($value);
     public function highestSeriesOrder($id, $post_id = null);
     public function saveRelations($model, $items = null);
+    public function getDateDiffForHumans($field);
 
 }

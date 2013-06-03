@@ -2,6 +2,8 @@
 
 use Sorora\Empower\Models\SupportModel;
 
+use Carbon\Carbon;
+
 class Post extends SupportModel {
     protected $fillable = array('user_id', 'series_id', 'series_order', 'title', 'slug', 'content', 'published');
 
@@ -49,6 +51,12 @@ class Post extends SupportModel {
         }
 
         return ($post) ? $post->series_order + 1 : 1;
+    }
+
+    public function getDateDiffForHumans($field)
+    {
+        $carbon = new Carbon($this->$field);
+        return $carbon->diffForHumans();
     }
 
     public function saveRelations($model, $items = null)
