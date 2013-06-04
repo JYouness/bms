@@ -27,6 +27,24 @@ class BlogController extends EmpowerController {
     }
 
     /**
+     * Display a listing of posts
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $posts = $this->post->with(array('categories' => function ($query) {
+           $query->orderBy('name', 'asc'); 
+        }, 'tags' => function ($query) {
+           $query->orderBy('name', 'asc'); 
+        }))->where('published', 1)->orderBy('created_at', 'desc')->paginate(5);
+
+        $this->data['posts'] = $posts;
+
+        return \View::make($this->viewFromConfig('bms', 'blog', 'index'), $this->data);
+    }
+
+    /**
      * Display a post retrieved from the slug
      *
      * @param  string  $slug
@@ -41,7 +59,7 @@ class BlogController extends EmpowerController {
         }))->where('slug', $slug)->firstOrFail();
 
         // Only allow the author to preview a blog post when not published
-        if($post->published !== 1 and \Auth::user()->id !== $post->user_id)
+        if($post->published !== 1 and (!\Auth::check() or \Auth::user()->id !== $post->user_id))
         {
             return \App::abort(404, 'Page not found');
         }
@@ -65,6 +83,18 @@ class BlogController extends EmpowerController {
     }
 
     /**
+     * Display a list of categories
+     *
+     * @return Response
+     */
+    public function categories()
+    {
+        $this->data['categories'] = $this->category->orderBy('name', 'asc')->paginate(5);
+
+        return \View::make($this->viewFromConfig('bms', 'blog', 'categories'), $this->data);
+    }
+
+    /**
      * Display a category listing posts from the slug.
      *
      * @param  string  $slug
@@ -74,7 +104,8 @@ class BlogController extends EmpowerController {
     {
         $category = $this->category->with(array('posts' => function ($query) {
             $query->orderBy('created_at', 'desc');
-        }))->where('slug', $slug)->firstOrFail();
+            $query->where('published', 1);
+        }, 'posts.categories', 'posts.tags'))->where('slug', $slug)->firstOrFail();
 
         return $this->singleList($category, 'category');
     }
@@ -89,7 +120,8 @@ class BlogController extends EmpowerController {
     {
         $tag = $this->tag->with(array('posts' => function ($query) {
             $query->orderBy('created_at', 'desc');
-        }))->where('slug', $slug)->firstOrFail();
+            $query->where('published', 1);
+        }, 'posts.categories', 'posts.tags'))->where('slug', $slug)->firstOrFail();
 
         return $this->singleList($tag, 'tag');
     }
