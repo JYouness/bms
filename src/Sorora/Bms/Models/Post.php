@@ -32,6 +32,21 @@ class Post extends SupportModel {
         return $this->belongsTo('Sorora\Bms\Models\Series', 'series_id');
     }
 
+    public function getContentAttribute($value)
+    {
+        $config = \Config::get('bms::formatter');
+        if(empty($config))
+        {
+            return $value;
+        }
+        if(count($config) == 2)
+        {
+            return $config[0]::$config[1]($value);
+        }
+        
+        return $config[0]($value);
+    }
+
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = trim($value);

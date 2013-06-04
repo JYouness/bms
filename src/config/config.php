@@ -2,6 +2,22 @@
 return array(
     /*
     |--------------------------------------------------------------------------
+    | Formatter class/function name
+    |--------------------------------------------------------------------------
+    |
+    | This should be set to the function you wish to call if you want to format
+    | blog post content in a specific way (e.g. markdown processer), this will
+    | be called when outputting blog content to the view.
+    | Examples:
+    |   'formatter' => array('\Class', 'function')
+    |   'formatter' => array('function')
+    |   array() // default, will do nothing
+    | Note: Classes will be need to have a \ before the class name. Functions
+    | are called STATICALLY. (Class::function)
+    */
+    'formatter' => array('Markdown', 'string'),
+    /*
+    |--------------------------------------------------------------------------
     | Prefix
     |--------------------------------------------------------------------------
     |
