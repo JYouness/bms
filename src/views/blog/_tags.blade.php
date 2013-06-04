@@ -5,4 +5,4 @@
             {{ HTML::linkRoute('blog.tag', $post->tags[$i]->name, array($post->tags[$i]->slug)) }}{{ (($i != $post->tags->count() - 1) ? ',' : null) }}
         @endfor
     </div>
-    @endif
+@endif
