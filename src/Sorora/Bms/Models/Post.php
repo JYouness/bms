@@ -32,6 +32,11 @@ class Post extends SupportModel {
         return $this->belongsTo('Sorora\Bms\Models\Series', 'series_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('Sorora\Aurp\Models\User', 'user_id');
+    }
+
     public function getContentAttribute($value)
     {
         $config = \Config::get('bms::formatter');
