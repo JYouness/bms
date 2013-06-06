@@ -2,20 +2,24 @@
 
 use Sorora\Empower\Controllers\EmpowerController as EmpowerController;
 
+use Sorora\Bms\Models\Repositories\Category\CategoryRepositoryInterface as Category;
 use Sorora\Bms\Models\Repositories\Post\PostRepositoryInterface as Post;
 use Sorora\Bms\Models\Repositories\Series\SeriesRepositoryInterface as Series;
+use Sorora\Bms\Models\Repositories\Tag\TagRepositoryInterface as Tag;
 
 class PostsController extends EmpowerController {
 
     protected $post;
     protected $series;
 
-    public function __construct(Post $post, Series $series)
+    public function __construct(Category $category, Post $post, Series $series, Tag $tag)
     {
         parent::__construct();
 
+        $this->category = $category;
         $this->post = $post;
         $this->series = $series;
+        $this->tag = $tag;
 
         $this->data['baseurl'] = $this->baseurl .= 'posts';
     }
@@ -45,6 +49,8 @@ class PostsController extends EmpowerController {
 
         \View::share('series', array(0 => 'None') + $this->series->orderBy('title', 'asc')->lists('title', 'id'));
         \View::share('post', (object) array('series_id' => null, 'published' => null));
+        \View::share('categories', $tag->orderBy('name', 'asc')->lists('name', 'id'));
+        \View::share('tags', $tag->orderBy('name', 'asc')->lists('name', 'id'));
         \View::share('current_tags', '');
         \View::share('current_categories', '');
 
@@ -114,6 +120,8 @@ class PostsController extends EmpowerController {
 
         \View::share('series', array(0 => 'None') + $this->series->orderBy('title', 'asc')->lists('title', 'id'));
         \View::share('post', $this->data['post']);
+        \View::share('categories', $tag->orderBy('name', 'asc')->lists('name', 'id'));
+        \View::share('tags', $tag->orderBy('name', 'asc')->lists('name', 'id'));
         \View::share('current_tags', implode(',', $this->data['post']->tags->lists('name')));
         \View::share('current_categories',  implode(',', $this->data['post']->categories->lists('name')));
 

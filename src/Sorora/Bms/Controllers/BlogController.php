@@ -33,7 +33,7 @@ class BlogController extends EmpowerController {
      */
     public function index()
     {
-        $posts = $this->post->with(array('categories' => function ($query) {
+        $posts = $this->post->with(array('user', 'categories' => function ($query) {
            $query->orderBy('name', 'asc'); 
         }, 'tags' => function ($query) {
            $query->orderBy('name', 'asc'); 
@@ -52,7 +52,7 @@ class BlogController extends EmpowerController {
      */
     public function post($slug)
     {
-        $post = $this->post->with(array('categories' => function ($query) {
+        $post = $this->post->with(array('user', 'categories' => function ($query) {
            $query->orderBy('name', 'asc'); 
         }, 'tags' => function ($query) {
            $query->orderBy('name', 'asc'); 
@@ -105,7 +105,7 @@ class BlogController extends EmpowerController {
         $category = $this->category->with(array('posts' => function ($query) {
             $query->orderBy('created_at', 'desc');
             $query->where('published', 1);
-        }, 'posts.categories', 'posts.tags'))->where('slug', $slug)->firstOrFail();
+        }, 'posts.categories', 'posts.tags', 'posts.user'))->where('slug', $slug)->firstOrFail();
 
         return $this->singleList($category, 'category');
     }
@@ -121,7 +121,7 @@ class BlogController extends EmpowerController {
         $tag = $this->tag->with(array('posts' => function ($query) {
             $query->orderBy('created_at', 'desc');
             $query->where('published', 1);
-        }, 'posts.categories', 'posts.tags'))->where('slug', $slug)->firstOrFail();
+        }, 'posts.categories', 'posts.tags', 'posts.user'))->where('slug', $slug)->firstOrFail();
 
         return $this->singleList($tag, 'tag');
     }
