@@ -49,8 +49,8 @@ class PostsController extends EmpowerController {
 
         \View::share('series', array(0 => 'None') + $this->series->orderBy('title', 'asc')->lists('title', 'id'));
         \View::share('post', (object) array('series_id' => null, 'published' => null));
-        \View::share('categories', $tag->orderBy('name', 'asc')->lists('name', 'id'));
-        \View::share('tags', $tag->orderBy('name', 'asc')->lists('name', 'id'));
+        \View::share('categories', $this->category->orderBy('name', 'asc')->lists('name', 'id'));
+        \View::share('tags', $this->tag->orderBy('name', 'asc')->lists('name', 'id'));
         \View::share('current_tags', '');
         \View::share('current_categories', '');
 
@@ -120,8 +120,8 @@ class PostsController extends EmpowerController {
 
         \View::share('series', array(0 => 'None') + $this->series->orderBy('title', 'asc')->lists('title', 'id'));
         \View::share('post', $this->data['post']);
-        \View::share('categories', $tag->orderBy('name', 'asc')->lists('name', 'id'));
-        \View::share('tags', $tag->orderBy('name', 'asc')->lists('name', 'id'));
+        \View::share('categories', $this->category->orderBy('name', 'asc')->lists('name', 'id'));
+        \View::share('tags', $this->tag->orderBy('name', 'asc')->lists('name', 'id'));
         \View::share('current_tags', implode(',', $this->data['post']->tags->lists('name')));
         \View::share('current_categories',  implode(',', $this->data['post']->categories->lists('name')));
 
