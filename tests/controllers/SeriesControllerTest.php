@@ -1,8 +1,9 @@
 <?php
 
 use Way\Tests\Factory;
+use Sorora\Empower\Tests\EmpowerTestCase as EmpowerTestCase;
 
-class SeriesControllerTest extends TestCase {
+class SeriesControllerTest extends EmpowerTestCase {
 
     protected $model;
     protected $var;
@@ -10,16 +11,6 @@ class SeriesControllerTest extends TestCase {
     protected $route;
     protected $factory;
     protected $mock;
-
-    public function __call($method, $args)
-    {
-        if (in_array($method, ['get', 'post', 'put', 'patch', 'delete']))
-        {
-            return $this->call($method, $args[0]);
-        }
-
-        throw new BadMethodCallException;
-    }
 
     public function setUp()
     {
