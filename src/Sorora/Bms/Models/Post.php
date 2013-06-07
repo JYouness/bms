@@ -73,6 +73,12 @@ class Post extends SupportModel {
         return ($post) ? $post->series_order + 1 : 1;
     }
 
+    public function getAtomDate($field)
+    {
+        $carbon = new Carbon($this->$field);
+        return $carbon->toATOMString();
+    }
+
     public function getDateDiffForHumans($field)
     {
         $carbon = new Carbon($this->$field);
