@@ -37,19 +37,19 @@ class Post extends SupportModel {
         return $this->belongsTo('Sorora\Aurp\Models\User', 'user_id');
     }
 
-    public function getContentAttribute($value)
+    public function getParsedAttribute()
     {
         $config = \Config::get('bms::formatter');
         if(empty($config))
         {
-            return $value;
+            return $this->content;
         }
         if(count($config) == 2)
         {
-            return $config[0]::$config[1]($value);
+            return $config[0]::$config[1]($this->content);
         }
         
-        return $config[0]($value);
+        return $config[0]($this->content);
     }
 
     public function setTitleAttribute($value)

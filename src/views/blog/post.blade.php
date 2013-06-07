@@ -32,7 +32,7 @@
     @endif
 
     <article>
-        {{ $post->content }}
+        {{ $post->parsed }}
     </article>
 
     @include('bms::blog._tags')

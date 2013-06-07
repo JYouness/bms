@@ -11,7 +11,7 @@
             @include('bms::blog._post_categories')
         </small>
         <section>
-            {{ Str::words($post->content) }}
+            {{ Str::words($post->parsed) }}
         </section>
         <small>
             {{ HTML::linkRoute('blog.post', 'Read more', array($post->slug)) }}<br />

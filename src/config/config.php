@@ -15,7 +15,7 @@ return array(
     | Note: Classes will be need to have a \ before the class name. Functions
     | are called STATICALLY. (Class::function)
     */
-    'formatter' => array(),
+    'formatter' => array('Markdown', 'string'),
     /*
     |--------------------------------------------------------------------------
     | Base URL
