@@ -49,8 +49,8 @@ class PostsController extends EmpowerController {
 
         \View::share('series', array(0 => 'None') + $this->series->orderBy('title', 'asc')->lists('title', 'id'));
         \View::share('post', (object) array('series_id' => null, 'published' => null));
-        \View::share('categories', $this->category->select('name')->orderBy('name', 'asc')->get()->toJson());
-        \View::share('tags', $this->tag->select('name')->orderBy('name', 'asc')->get()->toJson());
+        \View::share('categories', $this->category->select('name')->orderBy('name', 'asc')->lists('name'));
+        \View::share('tags', $this->tag->select('name')->orderBy('name', 'asc')->lists('name'));
         \View::share('current_tags', '');
         \View::share('current_categories', '');
 
@@ -118,8 +118,8 @@ class PostsController extends EmpowerController {
 
         \View::share('series', array(0 => 'None') + $this->series->orderBy('title', 'asc')->lists('title', 'id'));
         \View::share('post', $this->data['post']);
-        \View::share('categories', $this->category->select('name')->orderBy('name', 'asc')->get()->toJson());
-        \View::share('tags', $this->tag->select('name')->orderBy('name', 'asc')->get()->toJson());
+        \View::share('categories', $this->category->select('name')->orderBy('name', 'asc')->lists('name'));
+        \View::share('tags', $this->tag->select('name')->orderBy('name', 'asc')->lists('name'));
         \View::share('current_tags', ($this->data['post']->tags->count() > 0) ? implode(',', $this->data['post']->tags()->lists('name')) : '');
         \View::share('current_categories', ($this->data['post']->categories->count() > 0) ? implode(',', $this->data['post']->categories()->lists('name')) : '');
 
