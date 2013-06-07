@@ -22,8 +22,8 @@ class BlogController extends EmpowerController {
         $this->series = $series;
         $this->tag = $tag;
         $this->category = $category;
-
-        $this->data['baseurl'] = $this->baseurl .= 'blog';
+        $baseurl = \Config::get('bms::baseurl');
+        $this->data['baseurl'] = (!empty($baseurl)) ? $baseurl.'.' : '' ;
     }
 
     /**
