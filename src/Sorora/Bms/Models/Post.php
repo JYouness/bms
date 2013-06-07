@@ -64,9 +64,9 @@ class Post extends SupportModel {
         if($post_id)
         {
             $current_post = Post::find($post_id);
-            if($id == $post->series_id)
+            if($id == $current_post->series_id)
             {
-                return $post->series_order;
+                return $current_post->series_order;
             }
         }
 
