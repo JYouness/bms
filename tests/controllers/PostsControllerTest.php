@@ -57,7 +57,12 @@ class PostsControllerTest extends TestCase {
     public function testIndex()
     {
         $this->mock
-             ->shouldReceive('all')
+             ->shouldReceive('orderBy')
+             ->once()
+             ->andReturn($this->mock);
+
+        $this->mock
+             ->shouldReceive('get')
              ->once()
              ->andReturn($this->mock);
 
