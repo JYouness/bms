@@ -9,5 +9,8 @@ interface PostRepositoryInterface {
     public function highestSeriesOrder($id, $post_id = null);
     public function saveRelations($model, $items = null);
     public function getDateDiffForHumans($field);
+    public function identify();
+    public function getParsedAttribute();
+    public function getAtomDate($field);
 
 }

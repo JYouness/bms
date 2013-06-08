@@ -74,6 +74,7 @@ class PostsController extends EmpowerController {
         );
         if (is_null($this->post->errors))
         {
+            $this->post->identify();
             // Save associated tags and categories
             $tags = $this->post->saveRelations('Tag', 'tags');
             if(!empty($tags))
@@ -147,6 +148,7 @@ class PostsController extends EmpowerController {
         );
         if ($this->post->update(\Input::all() + $extra_fields))
         {
+            $this->post->identify();
             // Save associated tags and categories
             $tags = $this->post->saveRelations('Tag', 'tags');
             if(!empty($tags))

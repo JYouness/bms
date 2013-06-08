@@ -41,4 +41,18 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
         return $this->model->getDateDiffForHumans($field);
     }
 
+    public function identify()
+    {
+        return $this->model->identify($field);
+    }
+
+    public function getParsedAttribute()
+    {
+        return $this->model->getParsedAttribute();
+    }
+    public function getAtomDate($field)
+    {
+        return $this->model->getAtomDate($field);
+    }
+
 }

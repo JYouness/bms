@@ -37,6 +37,26 @@ class Post extends SupportModel {
         return $this->belongsTo('Sorora\Aurp\Models\User', 'user_id');
     }
 
+    public function identify()
+    {
+        if(empty($this->identifier))
+        {
+            $identifier = \Str::quickRandom();
+            $post = Post::where('identifier', $identifier)->first();
+            if($post)
+            {
+                $this->identify();
+            }
+            else
+            {
+                $this->uniqueExcept('title');
+                $this->uniqueExcept('slug');
+                $this->identifier = $identifier;
+                $this->save();
+            }
+        }
+    }
+
     public function getParsedAttribute()
     {
         $config = \Config::get('bms::formatter');
