@@ -49,8 +49,6 @@ class Post extends SupportModel {
             }
             else
             {
-                $this->uniqueExcept('title');
-                $this->uniqueExcept('slug');
                 $this->identifier = $identifier;
                 $this->save();
             }

@@ -74,6 +74,8 @@ class PostsController extends EmpowerController {
         );
         if (is_null($this->post->errors))
         {
+            $this->post->uniqueExcept('title');
+            $this->post->uniqueExcept('slug');
             $this->post->identify();
             // Save associated tags and categories
             $tags = $this->post->saveRelations('Tag', 'tags');
